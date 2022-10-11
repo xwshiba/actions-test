@@ -38,12 +38,15 @@ jobs:
       run: |
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
      
+    # Add homebrew to PATH, see https://github.com/actions/runner-images/issues/6283 for details
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+     
     # run pdf-diff check and upload artifact
-    - name: Install pdf-diff tool
+    - name: Install pdf-diff check
       run: |
-        sudo apt-get -y update
-        sudo apt-get -y install diff-pdf
-      
+        brew install -y diff-pdf
       
     - name: Use pdf-diff tool to create diff.pdf
       run: |

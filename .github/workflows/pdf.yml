@@ -46,7 +46,7 @@ jobs:
     # run pdf-diff check and upload artifact
     - name: Install pdf-diff check
       run: |
-        brew install -y diff-pdf
+        brew install diff-pdf
       
     - name: Use pdf-diff tool to create diff.pdf
       run: |

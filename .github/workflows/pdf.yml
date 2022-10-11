@@ -7,7 +7,7 @@ name: Build PDF of Docs
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
 

@@ -43,16 +43,15 @@ jobs:
         name: PDF_HTML
         path: docs/_build/pdf/book.pdf
     
-    # install dnf on Ubuntu
-    - name: Install dnf
+    # Add homebrew to PATH, see https://github.com/actions/runner-images/issues/6283 for details
+    - name: Add homebrew to PATH
       run: |
-        sudo apt-get update
-        sudo apt-get -y install dnf
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
      
     # run pdf-diff check and upload artifact
     - name: Run pdf-diff check
       run: |
-        sudo dnf install -y diff-pdf
+        brew install -y diff-pdf
         diff-pdf --output-diff=./docs/_build/pdf/diff.pdf ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
         
     # clean build files

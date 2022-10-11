@@ -46,7 +46,7 @@ jobs:
     # run pdf-diff check and upload artifact
     - name: Run pdf-diff check
       run: |
-        dnf install diff-pdf
+        sudo dnf install diff-pdf
         diff-pdf --output-diff=./docs/_build/pdf/diff.pdf ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
         
     # clean build files

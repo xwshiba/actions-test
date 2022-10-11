@@ -41,7 +41,8 @@ jobs:
     # run pdf-diff check and upload artifact
     - name: Install pdf-diff tool
       run: |
-        sudo apt-get install diff-pdf
+        sudo apt-get -y update
+        sudo apt-get -y install diff-pdf
       
       
     - name: Use pdf-diff tool to create diff.pdf

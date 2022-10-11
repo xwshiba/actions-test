@@ -1,0 +1,7 @@
+format: jb-book
+root: intro_ln
+parts:
+- caption: 'Slides Templates'
+  numbered: true
+  chapters:
+  - file: 02_slides_template/layout_example

@@ -37,22 +37,22 @@ jobs:
     - name: Build PDF from HTML (Docs)
       run: |
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
-        
-    - uses: actions/upload-artifact@v3
-      with:
-        name: PDF_HTML
-        path: docs/_build/pdf/book.pdf
-    
-    # Add homebrew to PATH, see https://github.com/actions/runner-images/issues/6283 for details
-    - name: Add homebrew to PATH
-      run: |
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
      
     # run pdf-diff check and upload artifact
-    - name: Run pdf-diff check
+    - name: Install pdf-diff tool
       run: |
-        brew install -y diff-pdf
+        sudo apt-get install diff-pdf
+      
+      
+    - name: Use pdf-diff tool to create diff.pdf
+      run: |
         diff-pdf --output-diff=./docs/_build/pdf/diff.pdf ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
+    
+    # upload the diff result
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Upload diff.pdf
+        path: docs/_build/pdf/diff.pdf
         
     # clean build files
     - name: Clean build files

@@ -11,7 +11,7 @@ on:
 
 jobs:
   pdfhtml:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.9]
@@ -41,17 +41,17 @@ jobs:
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
      
     # run pdf-diff check and upload artifact
-    - name: Install pdf-diff check
+    - name: Install diff-pdf-visually
       run: |
-        brew update
-        brew install poppler imagemagick
-        pip install --user diff-pdf-visually
+        sudo apt update
+        sudo apt install python3-pip imagemagick poppler-utils
+        pip install diff-pdf-visually
       
-    - name: Use pdf-diff tool to create diff.pdf
+    - name: Use diff-pdf-visually tool to compare with baseline
       run: |
         diff-pdf-visually -v ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
     
-    # upload the diff result
+    # upload the current PDF
     - uses: actions/upload-artifact@v3
       with:
         name: Upload the Current PDF

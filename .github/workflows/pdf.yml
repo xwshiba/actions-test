@@ -11,18 +11,23 @@ on:
 
 jobs:
   pdfhtml:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         python-version: [3.9]
 
     steps:
+    - name: Check out
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
         cache: "pip"
+    - name: Install GitHub CLI
+      run: |
+        brew update
+        install gh
         
     - name: Install Python dependencies
       run: |
@@ -46,8 +51,8 @@ jobs:
     # run pdf-diff check and upload artifact
     - name: Install pdf-diff check
       run: |
-        sudo apt-get update
-        sudo apt-get install diff-pdf
+        brew update
+        brew install diff-pdf
       
     - name: Use pdf-diff tool to create diff.pdf
       run: |

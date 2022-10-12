@@ -43,7 +43,7 @@ jobs:
     # upload the current PDF
     - uses: actions/upload-artifact@v3
       with:
-        name: Upload the Current PDF
+              name: PDF_HTML
         path: docs/_build/pdf/book.pdf
    
     # run pdf-diff check and upload artifact
@@ -55,10 +55,10 @@ jobs:
       
     - name: Use diff-pdf-visually tool to compare with baseline
       run: |
-        diff-pdf-visually -v --time 60 ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf --threshold 50
+        diff-pdf-visually -v --time 30 ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf --threshold 50
         
     # Upload Difference Files
     - uses: actions/upload-artifact@v3
       with:
-        name: Upload the tmp diff files
+        name: TMP_DIFF
         path: tmp/

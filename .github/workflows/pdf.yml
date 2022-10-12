@@ -50,7 +50,7 @@ jobs:
       
     - name: Use pdf-diff tool to create diff.pdf
       run: |
-        diff-pdf --output-diff=./docs/_build/pdf/diff.pdf ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
+        sudo diff-pdf --output-diff=./docs/_build/pdf/diff.pdf ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
     
     # upload the diff result
     - uses: actions/upload-artifact@v3

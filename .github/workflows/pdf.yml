@@ -19,11 +19,6 @@ jobs:
     steps:
     - name: Check out
       uses: actions/checkout@v3
-    
-    - name: Install GitHub CLI
-      run: |
-        brew update
-        brew install gh
         
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -49,17 +44,18 @@ jobs:
     - name: Install pdf-diff check
       run: |
         brew update
-        brew install diff-pdf
+        brew install poppler imagemagick
+        pip install --user diff-pdf-visually
       
     - name: Use pdf-diff tool to create diff.pdf
       run: |
-        diff-pdf --output-diff=./docs/_build/pdf/diff.pdf ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
+        diff-pdf-visually -v ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
     
     # upload the diff result
     - uses: actions/upload-artifact@v3
       with:
-        name: Upload diff.pdf
-        path: docs/_build/pdf/diff.pdf
+        name: Upload the Current PDF
+        path: docs/_build/pdf/book.pdf
         
     # clean build files
     - name: Clean build files

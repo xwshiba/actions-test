@@ -40,6 +40,12 @@ jobs:
       run: |
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
      
+    # upload the current PDF
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Upload the Current PDF
+        path: docs/_build/pdf/book.pdf
+   
     # run pdf-diff check and upload artifact
     - name: Install diff-pdf-visually
       run: |
@@ -50,12 +56,6 @@ jobs:
     - name: Use diff-pdf-visually tool to compare with baseline
       run: |
         diff-pdf-visually -v ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
-    
-    # upload the current PDF
-    - uses: actions/upload-artifact@v3
-      with:
-        name: Upload the Current PDF
-        path: docs/_build/pdf/book.pdf
         
     # clean build files
     - name: Clean build files

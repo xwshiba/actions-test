@@ -23,12 +23,7 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-        cache: "pip"
-    - name: Install GitHub CLI
-      run: |
-        brew update
-        install gh
-        
+        cache: "pip"        
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
@@ -42,11 +37,6 @@ jobs:
     - name: Build PDF from HTML (Docs)
       run: |
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
-     
-    # Add homebrew to PATH, see https://github.com/actions/runner-images/issues/6283 for details
-    - name: Set up Homebrew
-      id: set-up-homebrew
-      uses: Homebrew/actions/setup-homebrew@master
      
     # run pdf-diff check and upload artifact
     - name: Install pdf-diff check

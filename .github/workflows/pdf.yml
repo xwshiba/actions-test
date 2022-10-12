@@ -55,9 +55,10 @@ jobs:
       
     - name: Use diff-pdf-visually tool to compare with baseline
       run: |
-        diff-pdf-visually -v ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf
+        diff-pdf-visually -v --time 60 ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf --threshold 50
         
-    # clean build files
-    - name: Clean build files
-      run: |
-        rm -f -r ${PWD}/docs
+    # Upload Difference Files
+      uses: actions/upload-artifact@v3
+      with:
+        name: Upload the tmp diff files
+        path: tmp/

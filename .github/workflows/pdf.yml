@@ -58,7 +58,7 @@ jobs:
         diff-pdf-visually -v --time 60 ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf --threshold 50
         
     # Upload Difference Files
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: Upload the tmp diff files
         path: tmp/

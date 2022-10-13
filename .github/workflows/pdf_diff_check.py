@@ -6,7 +6,7 @@ import pathlib
 
 pdf_1 = sys.argv[1]
 pdf_2 = sys.argv[2]
-t = sys.argv[3]
+t = int(sys.argv[3])
 
 pathlib.Path(__file__).parents[2].joinpath(
     'docs', '_build', 'pdf', 'diffpdf').mkdir(parents=True, exist_ok=True)

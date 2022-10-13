@@ -55,7 +55,7 @@ jobs:
       
     - name: Use diff-pdf-visually tool to compare with baseline
       run: |
-        python .github/workflows/pdf_diff_check.py 'baseline/baseline.pdf' 'docs/_build/pdf/book.pdf'
+        python .github/workflows/pdf_diff_check.py 'baseline/baseline.pdf' 'docs/_build/pdf/book.pdf' 50
         
     # Upload Difference Files
     - uses: actions/upload-artifact@v3

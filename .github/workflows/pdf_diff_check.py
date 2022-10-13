@@ -16,7 +16,7 @@ p = pathlib.Path(__file__).parents[2].joinpath(
 
 def log_pdf_diff(pdf_1, pdf_2, dir):
 
-    pdf_similar(pdf_1, pdf_2, tempdir=dir)
+    pdf_similar(pdf_1, pdf_2, tempdir=dir, threshold=50)
 
 
 log_pdf_diff(pdf_1, pdf_2, p)

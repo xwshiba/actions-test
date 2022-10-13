@@ -61,4 +61,4 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: PDF_DIFF
-        path: docs/_build/pdf/pdfdiff/
+        path: docs/_build/pdf/diffpdf/

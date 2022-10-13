@@ -46,7 +46,7 @@ jobs:
         name: PDF_HTML
         path: docs/_build/pdf/book.pdf
    
-    # run pdf-diff check and upload artifact
+    # run pdf-diff check
     - name: Install diff-pdf-visually
       run: |
         sudo apt update
@@ -55,10 +55,10 @@ jobs:
       
     - name: Use diff-pdf-visually tool to compare with baseline
       run: |
-        diff-pdf-visually -v --time 30 ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf --threshold 50
+        python .github/workflows/pdf_diff_check.py 'baseline/baseline.pdf' 'docs/_build/pdf/book.pdf'
         
     # Upload Difference Files
     - uses: actions/upload-artifact@v3
       with:
-        name: TMP_DIFF
-        path: /tmp/diffpdf*
+        name: PDF_DIFF
+        path: docs/_build/pdf/pdfdiff/

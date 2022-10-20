@@ -44,7 +44,7 @@ jobs:
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
      
     - name: Upload Current PDF
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: PDF_HTML
         path: docs/_build/pdf/book.pdf
@@ -79,7 +79,7 @@ jobs:
         python .github/workflows/pdf_diff_check.py 'baseline/baseline.pdf' 'docs/_build/pdf/book.pdf' 50
         
     - name: Upload PDF_DIFF Files
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: PDF_DIFF
         path: docs/_build/pdf/diffpdf/

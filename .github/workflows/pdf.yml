@@ -1,16 +1,17 @@
-# PDF Build for Test Book Visual Check
-# Relies on Jupyter Book build tools to build the pdf
-# Make sure the review the Log for warnings or errors
-# reference: https://github.com/executablebooks/jupyter-book/blob/master/.github/workflows/pdf.yml
+# PDF Build for Test Book Visual Check;
+# Relies on Jupyter Book build tools to build the pdf;
+# Make sure to review the Log for warnings or errors;
+# Reference: https://github.com/executablebooks/jupyter-book/blob/master/.github/workflows/pdf.yml;
+# For pdf difference check, used diff-pdf-visually package, MIT License;
 
-name: Build PDF of Docs
+name: Build PDF and PDF Difference Check Pipeline
 
 on:
   push:
     branches: [main, master]
 
 jobs:
-  pdfhtml:
+  pdfdiff:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -38,27 +39,28 @@ jobs:
     
     - name: Build PDF from HTML (Docs)
       run: |
+        # Will change to make files later
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
-     
-    # upload the current PDF
-    - uses: actions/upload-artifact@v3
+    
+    - name: Upload Current PDF_HTML
+      uses: actions/upload-artifact@v3
       with:
         name: PDF_HTML
         path: docs/_build/pdf/book.pdf
-   
-    # run pdf-diff check and upload artifact
+
+    
     - name: Install diff-pdf-visually
       run: |
         sudo apt update
         sudo apt install python3-pip imagemagick poppler-utils
         pip install diff-pdf-visually
       
-    - name: Use diff-pdf-visually tool to compare with baseline
+    - name: Compare with baseline
       run: |
-        diff-pdf-visually -v --time 30 ./baseline/baseline.pdf ./docs/_build/pdf/book.pdf --threshold 50
+        python .github/workflows/pdf_diff_check.py 'baseline/baseline.pdf' 'docs/_build/pdf/book.pdf' 50
         
-    # Upload Difference Files
-    - uses: actions/upload-artifact@v3
+    - name: Upload PDF_DIFF Files
+      uses: actions/upload-artifact@v3
       with:
-        name: TMP_DIFF
-        path: tmp/
+        name: PDF_DIFF
+        path: docs/_build/pdf/diffpdf/

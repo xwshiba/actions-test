@@ -41,7 +41,14 @@ jobs:
       run: |
         # Will change to make files later
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
-        
+    
+    - name: Upload Current PDF_HTML
+      uses: actions/upload-artifact@v3
+      with:
+        name: PDF_DIFF
+        path: docs/_build/pdf/book.pdf
+
+    
     - name: Install diff-pdf-visually
       run: |
         sudo apt update

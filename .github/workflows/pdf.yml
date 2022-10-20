@@ -43,7 +43,7 @@ jobs:
     # upload the current PDF
     - uses: actions/upload-artifact@v3
       with:
-              name: PDF_HTML
+        name: PDF_HTML
         path: docs/_build/pdf/book.pdf
    
     # run pdf-diff check and upload artifact

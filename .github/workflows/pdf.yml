@@ -45,7 +45,7 @@ jobs:
     - name: Upload Current PDF_HTML
       uses: actions/upload-artifact@v3
       with:
-        name: PDF_DIFF
+        name: PDF_HTML
         path: docs/_build/pdf/book.pdf
 
     

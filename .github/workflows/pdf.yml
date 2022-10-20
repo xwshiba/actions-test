@@ -11,8 +11,7 @@ on:
     branches: [main, master]
 
 jobs:
-  # Build pdfhtml of current contents
-  pdfhtml:
+  pdfdiff:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -42,36 +41,11 @@ jobs:
       run: |
         # Will change to make files later
         jb build --builder pdfhtml -n --keep-going --path-output ${PWD}/docs --config ${PWD}/content/tb_config.yml --toc ${PWD}/content/tb_toc.yml content
-     
-    - name: Upload Current PDF
-      uses: actions/upload-artifact@v3
-      with:
-        name: PDF_HTML
-        path: docs/_build/pdf/book.pdf
- 
-  # Run pdf-diff check
-  pdfdiffcheck:
-    needs: [pdfhtml]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.9]
-    
-    steps:
-    - name: Check out
-      uses: actions/checkout@v3
-        
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-        cache: "pip" 
         
     - name: Install diff-pdf-visually
       run: |
         sudo apt update
         sudo apt install python3-pip imagemagick poppler-utils
-        python -m pip install --upgrade pip
         pip install diff-pdf-visually
       
     - name: Compare with baseline
